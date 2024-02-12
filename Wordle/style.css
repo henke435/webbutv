@@ -1,6 +1,10 @@
+body {
+  margin-top: 1%;
+}
 .big-input-container {
   display: flex;
   justify-content: center;
+  margin: 3%;
 }
 .big-button-container {
   display: flex;
@@ -9,7 +13,6 @@
 .buttons-container {
   width: 500px;
   height: 100px;
-  background-color: aqua;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -17,16 +20,30 @@
   align-self: center;
 }
 .input-container {
-  background-color: red;
   display: flex;
+}
+.header-container {
+  display: flex;
+  justify-content: center;
 }
 button {
   background-color: lightgray;
   width: 80px;
   height: 80px;
+  cursor: pointer;
+}
+h1 {
+  font-size: 100px;
+  font-family: "Times New Roman", Times, serif;
 }
 
 #send-button {
-  width: 100px;
+  width: 250px;
+  height: 80px;
+  font-size: 30px;
+}
+#input {
+  font-size: 30px;
+  width: 250px;
   height: 80px;
 }
