@@ -1,0 +1,32 @@
+.big-input-container {
+  display: flex;
+  justify-content: center;
+}
+.big-button-container {
+  display: flex;
+  justify-content: center;
+}
+.buttons-container {
+  width: 500px;
+  height: 100px;
+  background-color: aqua;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  align-self: center;
+}
+.input-container {
+  background-color: red;
+  display: flex;
+}
+button {
+  background-color: lightgray;
+  width: 80px;
+  height: 80px;
+}
+
+#send-button {
+  width: 100px;
+  height: 80px;
+}
