@@ -26,6 +26,7 @@ wordList = [
   "adopt",
   "adore",
   "adorn",
+  "adieu",
   "adult",
   "affix",
   "afire",
@@ -48,6 +49,7 @@ wordList = [
   "album",
   "alert",
   "algae",
+  "alias",
   "alibi",
   "alien",
   "align",
@@ -1400,6 +1402,7 @@ wordList = [
   "pesto",
   "petal",
   "petty",
+  "peony",
   "phase",
   "phone",
   "phony",
@@ -2312,7 +2315,16 @@ wordList = [
   "zesty",
   "zonal",
 ];
-
+resetList = [...wordList];
+let rightLetters = ["-", "-", "-", "-", "-"];
+let includedLetters = [];
+function removeRightLetters(printList, word, i, j) {
+  let wordArray = word.split("");
+  wordArray.splice(i, 1, "-");
+  word = wordArray.join("");
+  printList.splice(j, 1, word);
+  return printList;
+}
 function handleClick() {
   var button = this;
   if (button.style.backgroundColor == "lightgray") {
@@ -2324,8 +2336,6 @@ function handleClick() {
   }
 }
 function getWord() {
-  rightLetters = ["-", "-", "-", "-", "-"];
-  almostRightLetters = [];
   let guess = document.getElementById("input").value.toLowerCase();
   if (wordList.includes(guess)) {
     for (let i = 0; i < 5; i++) {
@@ -2342,10 +2352,13 @@ function getWord() {
     }
     for (let i = 0; i < 5; i++) {
       if (document.getElementById(i).style.backgroundColor === "yellow") {
+        includedLetters.push(guess[i]);
         for (let j = wordList.length - 1; j >= 0; j--) {
-          word = wordList[j];
+          //rätt
+          word = wordList[j]; //rätt
           if (word[i] === guess[i]) {
-            wordList.splice(j, 1);
+            //rätt
+            wordList.splice(j, 1); //rätt
           } else if (rightLetters.includes(guess[i])) {
             let count = 0;
             for (let k = 0; k < word.length; k++) {
@@ -2358,29 +2371,65 @@ function getWord() {
             }
           } else if (!word.includes(guess[i])) {
             wordList.splice(j, 1);
-          } else {
-            almostRightLetters.push(word[i]);
           }
         }
       }
       if (document.getElementById(i).style.backgroundColor === "lightgray") {
         for (let j = wordList.length - 1; j >= 0; j--) {
           word = wordList[j];
-          if (
+          if (word.includes(guess[i]) && rightLetters.includes(guess[i])) {
+            let count = 0;
+            let rightLettersCount = 0;
+            for (let k = 0; k < word.length; k++) {
+              if (word[k] == guess[i]) {
+                count++;
+              }
+              if (rightLetters[k] == guess[i]) {
+                rightLettersCount++;
+              }
+            }
+
+            if (count != rightLettersCount) {
+              wordList.splice(j, 1);
+            }
+          } else if (
             word.includes(guess[i]) &&
             !rightLetters.includes(guess[i]) &&
-            !almostRightLetters.includes(guess[i])
+            !includedLetters.includes(guess[i])
           ) {
+            wordList.splice(j, 1);
+          } else if (word[i] === guess[i]) {
             wordList.splice(j, 1);
           }
         }
       }
     }
-    document.getElementById("result").innerHTML =
-      wordList[0] + " " + wordList[1] + " " + wordList[2];
+    let printList = [...wordList];
+    let i = 0;
+    while (i < 5 && printList.length > 0) {
+      let j = printList.length - 1;
+      word = printList[j];
+      if (word[i] == rightLetters[i]) {
+        while (j >= 0) {
+          word = printList[j];
+          printList = removeRightLetters(printList, word, i, j);
+          j--;
+        }
+      }
+      i++;
+    }
+    console.log(printList);
+    //dssssssssssssssssssssssssssssssssssssssssssssssssssss
+    for (let i = 0; i < 5; i++) {}
+
+    document.getElementById("result").innerHTML = "Next guess: " + wordList[0];
   } else {
     alert("Your word isn't in the wordle database");
   }
+  for (let i = 0; i < 5; i++) {
+    document.getElementById(i).style.backgroundColor = "lightgray";
+  }
+  document.getElementById("input").value = "";
 }
 
 document.querySelectorAll("button").forEach((button) => {
@@ -2389,3 +2438,10 @@ document.querySelectorAll("button").forEach((button) => {
 });
 
 document.getElementById("send-button").onclick = getWord;
+
+document.getElementById("reset-button").onclick = function () {
+  rightLetters = ["-", "-", "-", "-", "-"];
+  includedLetters = [];
+  wordList = [...resetList];
+  document.getElementById("result").innerHTML = "Next guess: ";
+};
