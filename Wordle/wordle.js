@@ -430,6 +430,7 @@ wordList = [
   "coast",
   "cobra",
   "cocoa",
+  "codon",
   "colon",
   "color",
   "comet",
@@ -2207,6 +2208,7 @@ wordList = [
   "viola",
   "viper",
   "viral",
+  "vitro",
   "virus",
   "visit",
   "visor",
@@ -2420,7 +2422,7 @@ function getWord() {
       i++;
     }
     console.log(printList);
-    //dssssssssssssssssssssssssssssssssssssssssssssssssssss
+    //---------------------------------------------------------------
     for (let i = 0; i < 5; i++) {}
 
     document.getElementById("result").innerHTML = "Next guess: " + wordList[0];
